@@ -630,6 +630,7 @@ interestingArg env e = go env 0 e
     go _   _ (Coercion _)      = TrivArg
     go env n (App fn (Type _)) = go env n fn
     go env n (App fn _)        = go env (n+1) fn
+    go _   _ (ConApp _ _)      = ValueArg
     go env n (Tick _ a)        = go env n a
     go env n (Cast e _)        = go env n e
     go env n (Lam v e)
@@ -1819,6 +1820,8 @@ mkCase1 _dflags scrut case_bndr _ alts@((_,_,rhs1) : _)      -- Identity case
         -- See Note [RHS casts]
     check_eq (Lit lit)  (LitAlt lit') _    = lit == lit'
     check_eq (Var v) _ _  | v == case_bndr = True
+    check_eq (ConApp con [])  (DataAlt con') [] = con == con'
+                                             -- Optimisation only
     check_eq (Var v)    (DataAlt con) []   = v == dataConWorkId con
                                              -- Optimisation only
     check_eq (Tick t e) alt           args = tickishFloatable t &&

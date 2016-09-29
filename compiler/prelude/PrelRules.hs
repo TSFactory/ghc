@@ -31,7 +31,7 @@ import PrimOp      ( PrimOp(..), tagToEnumKey )
 import TysWiredIn
 import TysPrim
 import TyCon       ( tyConDataCons_maybe, isEnumerationTyCon, isNewTyCon, unwrapNewTyCon_maybe )
-import DataCon     ( dataConTag, dataConTyCon, dataConWorkId )
+import DataCon     ( dataConTag, dataConTyCon )
 import CoreUtils   ( cheapEqExpr, exprIsHNF )
 import CoreUnfold  ( exprIsConApp_maybe )
 import Type
@@ -831,8 +831,8 @@ trueValInt  dflags = Lit $ onei  dflags -- see Note [What's true and false]
 falseValInt dflags = Lit $ zeroi dflags
 
 trueValBool, falseValBool :: Expr CoreBndr
-trueValBool   = Var trueDataConId -- see Note [What's true and false]
-falseValBool  = Var falseDataConId
+trueValBool   = ConApp trueDataCon [] -- see Note [What's true and false]
+falseValBool  = ConApp falseDataCon []
 
 ltVal, eqVal, gtVal :: Expr CoreBndr
 ltVal = Var ltDataConId
@@ -893,7 +893,7 @@ tagToEnumRule = do
           correct_tag dc = (dataConTag dc - fIRST_TAG) == tag
       (dc:rest) <- return $ filter correct_tag (tyConDataCons_maybe tycon `orElse` [])
       ASSERT(null rest) return ()
-      return $ mkTyApps (Var (dataConWorkId dc)) tc_args
+      return $ ConApp dc (map Type tc_args)
 
     -- See Note [tagToEnum#]
     _ -> WARN( True, text "tagToEnum# on non-enumeration type" <+> ppr ty )
