@@ -1,0 +1,20 @@
+[url "git://github.com/ghc/packages-"]
+	insteadOf = git://github.com/TSFactory/packages/
+[url "http://github.com/ghc/packages-"]
+	insteadOf = http://github.com/TSFactory/packages/
+[url "https://github.com/ghc/packages-"]
+	insteadOf = https://github.com/TSFactory/packages/
+[url "ssh://git@github.com/ghc/packages-"]
+	insteadOf = ssh://git@github.com/TSFactory/packages/
+[url "git@github.com:ghc/packages-"]
+	insteadOf = git@github.com:TSFactory/packages/
+[url "https://github.com/ghc/libffi-tarballs.git"]
+	insteadOf = https://github.com/TSFactory/libffi-tarballs.git
+[url "https://github.com/ghc/nofib.git"]
+	insteadOf = https://github.com/TSFactory/nofib.git
+[url "https://github.com/ghc/haddock.git"]
+	insteadOf = https://github.com/TSFactory/haddock.git
+[url "https://github.com/ghc/hsc2hs.git"]
+	insteadOf = https://github.com/TSFactory/hsc2hs.git
+[url "https://github.com/ghc/arcanist-external-json-linter.git"]
+	insteadOf = https://github.com/TSFactory/arcanist-external-json-linter.git
